@@ -46,12 +46,12 @@ def email(to, text):
     smtpserver.ehlo;
     smtpserver.login(gmail_user, gmail_pwd);
     msg = MIMEText(text);
-    msg['Subject'] = "PAX TIX";
+    msg['Subject'] = "PAX TIX MAY BE AVAILABLE";
     msg['From'] = gmail_user;
     msg['To'] = to;
     try:
         smtpserver.sendmail(gmail_user, to, msg.as_string());
-        print('Sent email');
+        print('done');
         smtpserver.close();
         return 0;
     except:
@@ -66,7 +66,7 @@ def checkTweets(t_obj):
         return -1;
     
     if(tweets[0]['id'] != Last_Tweet_ID):
-        email(recip2, 'NEW TWEET: {0}'.format(tweets[0]['text']));
+        email(recip2, 'NEW TWEET FROM PAX!');
         print('New Tweet!');
         return tweets[0]['id'];
     else:
@@ -90,14 +90,11 @@ while 1:
             break;
         else:
             print("No Site changes");
-    except:
-        print("Site doesn't seem to be responding, going back to bed.");
-    
-    try:
+
         tweetResult = checkTweets(t_obj);
         if(tweetResult != -1):
             Last_Tweet_ID = tweetResult;
     except:
-        print("Some sort of error pinging twitter"); 
-
+        print("Shit fucked up, going back to bed.");
+        
     time.sleep(60);
